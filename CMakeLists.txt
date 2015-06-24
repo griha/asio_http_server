@@ -50,7 +50,7 @@ if (WITH_JEMALLOC)
 endif()
 
 if (BUILD_SAMPLES)
-    add_subdirectory(samples)
+    add_subdirectory(examples)
 endif()
 
 if (BUILD_TESTS)
