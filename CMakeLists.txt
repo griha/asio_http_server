@@ -57,7 +57,7 @@ if (BUILD_TESTS)
     add_subdirectory(tests)
 endif()
 
-ADD_SUBDIRECTORY(src)
+ADD_SUBDIRECTORY(asio_http_server)
 
 FILE(READ "VERSION" VERSION)
 STRING(REPLACE "\n" "" PROJECT_VERSION ${VERSION})
