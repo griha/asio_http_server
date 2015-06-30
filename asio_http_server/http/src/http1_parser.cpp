@@ -3,7 +3,7 @@
 #include <boost/throw_exception.hpp>
 #include <boost/algorithm/string.hpp>
 
-#include <externals/http_parser/http_parser.h>
+#include <externals/http-parser/http_parser.h>
 
 #include <glog/logging.h>
 #include <asio_http_server/http/http_request.h>
