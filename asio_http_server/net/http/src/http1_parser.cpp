@@ -1,4 +1,4 @@
-#include <asio_http_server/http/src/http1_parser.h>
+#include <asio_http_server/net/http/src/http1_parser.h>
 
 #include <boost/throw_exception.hpp>
 #include <boost/algorithm/string.hpp>
@@ -6,7 +6,7 @@
 #include <externals/http-parser/http_parser.h>
 
 #include <glog/logging.h>
-#include <asio_http_server/http/http_request.h>
+#include <asio_http_server/net/http/http_request.h>
 
 namespace server
 {

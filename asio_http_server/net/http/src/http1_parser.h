@@ -6,7 +6,7 @@
 #include <functional>
 #include <memory>
 
-#include <asio_http_server/http/fwd.h>
+#include <asio_http_server/net/http/fwd.h>
 
 struct http_parser;
 struct http_parser_settings;

@@ -38,6 +38,11 @@ public:
 
 	void setHttpVersion(Version version);
 
+	void setStatus(int status)
+	{
+		httpStatus_ = status;
+	}
+
 	void setBody(std::unique_ptr<boost::asio::streambuf> body);
 
 	void addHeader(const std::string& headerName,

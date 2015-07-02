@@ -1,5 +1,5 @@
 
-#include <asio_http_server/http/http_response.h>
+#include <asio_http_server/net/http/http_response.h>
 
 #include <boost/noncopyable.hpp>
 
