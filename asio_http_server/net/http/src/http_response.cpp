@@ -101,11 +101,6 @@ void HttpResponse::setHttpVersion(Version version)
 	version_ = version;
 }
 
-void HttpResponse::setBody(std::unique_ptr<boost::asio::streambuf> body)
-{
-	body_ = std::move(body);
-}
-
 void HttpResponse::addHeader(const std::string& headerName,
 		const std::string& headerValue)
 {
@@ -119,7 +114,7 @@ std::ostream& operator<<(std::ostream& out, const HttpResponse& response)
 	out << HttpResponse::versionToString(response.version_) << " ";
 	out << HttpResponse::statusToString(response.httpStatus_) << "\r\n";
 
-	for(const auto pair: response.headers_)
+	for (const auto pair: response.headers_)
 	{
 		out << pair.first << ": " << pair.second << "\r\n";
 	}

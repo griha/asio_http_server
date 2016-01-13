@@ -1,9 +1,10 @@
 set(NAME http)
 set(SRCS
-#    src/http_parser.cpp
     src/http1_parser.cpp
     src/http_request.cpp
     src/http_response.cpp
+    src/http_server.cpp
+    ../../../externals/http-parser/http_parser.c
     )
 
 add_library (${NAME} SHARED ${SRCS})

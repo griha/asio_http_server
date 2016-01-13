@@ -1,10 +1,3 @@
-/*
- * http_request.h
- *
- *  Created on: 18 февр. 2015 г.
- *      Author: griha
- */
-
 #ifndef ASIO_SERVER_SOURCE_HTTP_REQUEST_H_
 #define ASIO_SERVER_SOURCE_HTTP_REQUEST_H_
 

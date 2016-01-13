@@ -39,7 +39,7 @@ private:
 
 	std::vector<IoServerPtr> iOServices_;
 	std::vector<WorkPtr> works_;
-	std::size_t next_io_service_;
+	std::size_t nextIoService_;
 	std::size_t cpuCores_;
 
 

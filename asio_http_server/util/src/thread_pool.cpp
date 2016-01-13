@@ -1,8 +1,6 @@
 #include <asio_http_server/util/thread_pool.h>
 
-#include <memory>
 #include <thread>
-#include <functional>
 
 namespace server
 {
@@ -30,7 +28,7 @@ void bindToCpu(size_t cpuCores)
 ThreadPool::ThreadPool(std::size_t poolSize,
 		std::size_t cpuCores,
 		const std::string& /*threadName*/)
-: next_io_service_(0),
+: nextIoService_(0),
   cpuCores_(cpuCores)
 {
 	for (std::size_t i = 0; i < poolSize; ++i)
@@ -49,7 +47,6 @@ void ThreadPool::run()
 	{
 		std::unique_ptr<std::thread> thread = std::make_unique<std::thread>([this, i]
 				{
-					//bindToCpu(cpuCores_);
 					iOServices_[i]->run();
 				}
 		);
@@ -71,10 +68,10 @@ void ThreadPool::stop()
 
 boost::asio::io_service& ThreadPool::nextIoService()
 {
-	boost::asio::io_service& io_service = *iOServices_[next_io_service_];
-	  ++next_io_service_;
-	  if (next_io_service_ == iOServices_.size())
-	    next_io_service_ = 0;
+	boost::asio::io_service& io_service = *iOServices_[nextIoService_];
+	  ++nextIoService_;
+	  if (nextIoService_ == iOServices_.size())
+	    nextIoService_ = 0;
 	  return io_service;
 }
 

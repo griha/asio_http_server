@@ -14,7 +14,9 @@ namespace asio
 {
 
 HttpParser::HttpParser():
-		httpRequest_(std::make_shared<HttpRequest>())
+		httpRequest_(std::make_shared<HttpRequest>()),
+		httpParser_(std::make_shared<http_parser>()),
+		parserSettings_(std::make_shared<http_parser_settings>())
 {
 	http_parser_init(httpParser_.get(), HTTP_REQUEST);
 	parserSettings_->on_message_begin = HttpParser::messageBeginCallback;
@@ -70,8 +72,6 @@ int HttpParser::statusCallback(http_parser* /*parser*/,
 		size_t /*len*/)
 {
 	LOG(INFO) << "statusCallback";
-
-	//HttpParser* httpParser = static_cast<HttpParser*>(parser->data);
 
 	return 0;
 }

@@ -43,7 +43,10 @@ public:
 		httpStatus_ = status;
 	}
 
-	void setBody(std::unique_ptr<boost::asio::streambuf> body);
+	void setBody(std::unique_ptr<boost::asio::streambuf> body)
+	{
+		body_ = std::move(body);
+	}
 
 	void addHeader(const std::string& headerName,
 			const std::string& headerValue);
