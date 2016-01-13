@@ -1,0 +1,6 @@
+/Debug/
+/build/
+/.idea/
+.cproject
+.project
+/build*
