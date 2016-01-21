@@ -20,8 +20,8 @@ public:
 		httpBodyCallback_ = bodyCallback;
 	}
 
-	/*HttpRequestPtr*/ void onHttpRequest(boost::asio::ip::tcp::socket& socket,
-				boost::asio::streambuf& inputBuffer);
+	void onHttpRequest(boost::asio::ip::tcp::socket& socket,
+	                    boost::asio::streambuf& inputBuffer);
 
 private:
 

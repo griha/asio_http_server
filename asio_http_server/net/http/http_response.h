@@ -32,7 +32,8 @@ public:
 	static std::string statusToString(int status);
 
 	HttpResponse(Version version,
-			int httpStatus);
+			int httpStatus,
+			bool close);
 
 	virtual ~HttpResponse(){}
 

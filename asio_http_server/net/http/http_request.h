@@ -74,7 +74,7 @@ public:
 
 	void setUrl(const std::string& url)
 	{
-		url_ = url;
+		url_.append(url);
 	}
 
 	void setContentLength(long long contentLength)
@@ -116,6 +116,19 @@ public:
 	bool isKeepAlive() const
 	{
 		return keepAlive_;
+	}
+
+	std::string getHeader(const std::string& header) const
+	{
+	     auto it = headers_.find(header);
+             if (it != headers_.end())
+             {
+                 return it->second;
+             }
+             else
+             {
+                 return std::string();
+             }
 	}
 
 private:

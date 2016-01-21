@@ -12,7 +12,7 @@ namespace asio
 using HttpRequestCallback = std::function<HttpRequestPtr(boost::asio::streambuf& inputBuffer,
                 boost::asio::ip::tcp::socket& socket)>;
 
-using HttpBodyCallback = std::function<HttpResponsePtr(HttpRequestPtr)>;
+using HttpBodyCallback = std::function<void(HttpRequestPtr, HttpResponsePtr)>;
 
 using HttpResponseCallback = std::function<void(const HttpResponsePtr& response,
                 boost::asio::streambuf& outBuffer,

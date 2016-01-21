@@ -2,6 +2,7 @@
 #include <asio_http_server/net/server_option.h>
 #include <glog/logging.h>
 #include <asio_http_server/net/http/src/http1_parser.h>
+#include <asio_http_server/net/http/http_request.h>
 #include <asio_http_server/net/http/http_response.h>
 
 namespace server
@@ -23,8 +24,9 @@ void HttpServer::onHttpRequest(boost::asio::ip::tcp::socket& socket,
     if (error == boost::asio::error::eof)
     {
         LOG(WARNING) << "Connection closed cleanly by peer.";
+        return;
 
-        throw boost::system::system_error(error);
+        //throw boost::system::system_error(error);
     }
     else if (error)
     {
@@ -47,11 +49,16 @@ void HttpServer::onHttpRequest(boost::asio::ip::tcp::socket& socket,
         parser.parse(inputBuffer, contentLength);
     }
 
-    HttpResponsePtr responsePtr;
+    HttpRequestPtr requestPtr = parser.getHttpRequest();
+    auto version = requestPtr->getHttpVersion();
+    const std::string& connectionStatus = requestPtr->getHeader("Connection");
+    bool isConnectionClose = (connectionStatus == "close" || (version == HttpRequest::Version::HTTP10 && connectionStatus != "Keep-Alive")) ;
+
+    HttpResponsePtr responsePtr = std::make_shared<server::asio::HttpResponse>(static_cast<HttpResponse::Version>(requestPtr->getHttpVersion()), 200, true);
 
     if (httpBodyCallback_)
     {
-    	responsePtr = httpBodyCallback_(parser.getHttpRequest());
+    	httpBodyCallback_(requestPtr, responsePtr);
     }
 
     boost::asio::streambuf outBuffer;

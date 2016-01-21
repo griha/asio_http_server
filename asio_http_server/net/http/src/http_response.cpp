@@ -88,11 +88,16 @@ std::string HttpResponse::statusToString(int status)
 
 HttpResponse::HttpResponse(
 		Version version,
-		int httpStatus)
+		int httpStatus,
+		bool close)
 : version_(version),
   httpStatus_(httpStatus),
   body_(nullptr)
 {
+     if (close)
+          addHeader("Connection", "close");
+     else
+          addHeader("Connection", "keep-alive");
 
 }
 

@@ -23,39 +23,31 @@ int main(int argc, char* argv[])
 
      server::asio::HttpServer httpServer(option);
      httpServer.setRequestCallback([&httpServer](boost::asio::ip::tcp::socket& socket,
-     								 boost::asio::streambuf& inputBuffer)
-     						    {
-    	 	 	 	 	 	 	 	 httpServer.onHttpRequest(socket, inputBuffer);
-     						    });
+                                                 boost::asio::streambuf& inputBuffer)
+     {
+               httpServer.onHttpRequest(socket, inputBuffer);
+     });
 
-    httpServer.setHttpBodyCallback([&](server::asio::HttpRequestPtr httpRequest)
-    		 {
-    	 	 	 auto response = std::make_shared<server::asio::HttpResponse>(server::asio::HttpResponse::Version::HTTP11, 200);
-    	 	 	 response->addHeader("Content-Type", "text/html");
+    httpServer.setHttpBodyCallback([&](server::asio::HttpRequestPtr httpRequest,
+                                       server::asio::HttpResponsePtr response)
+     {
+          response->addHeader("Content-Type", "text/html");
 
-				if ((httpRequest->getHttpVersion() == server::asio::HttpRequest::Version::HTTP11) ||
-						httpRequest->isKeepAlive())
-				{
-					response->addHeader("Connection", "keep-alive");
-					//response->addHeader("Connection", "close");
-				}
+          auto body = std::make_unique<boost::asio::streambuf>();
+          std::ostream out(body.get());
 
+          const std::string str = "<html><head><title>test</title></head>"
+                               "<body><h1>Test</h1><p>This is a test!</p></body></html>";
 
-				auto body = std::make_unique<boost::asio::streambuf>();
-				std::ostream out(body.get());
+          out << str;
 
-				const std::string str = "<html><head><title>test</title></head>"
-							"<body><h1>Test</h1><p>This is a test!</p></body></html>";
-
-				out << str;
-
-				response->addHeader("Content-Length: ", std::to_string(str.length()));
+          response->addHeader("Content-Length", std::to_string(str.length()));
 
 
-				response->setBody(std::move(body));
+          response->setBody(std::move(body));
 
-				return response;
-    		 });
+          return response;
+     });
 
      PLOG(INFO) << "starting server";
      VLOG(6) << "-----------";
